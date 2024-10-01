@@ -12,12 +12,8 @@ const corsOptions = {
     credentials:true,
     optionSuccessStatus:200
 }
-const db = new pg.Client({
-    database: process.env.DATABASE,
-    host: process.env.HOST,
-    user: process.env.UNAME,
-    password: process.env.PASSWORD,
-    port: process.env.DBPORT
+const db = new pg.Pool({
+    connectionString: process.env.POSTGRES_URL,
 })
 
 db.connect();
