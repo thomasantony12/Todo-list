@@ -43,7 +43,7 @@ function App() {
   function inputTask(val) {
     if(val){
       const time = new Date().toLocaleDateString();
-      axios.post(origin + "newTask", { task: val, time: time });
+      axios.post(origin + "newTask", { task: val, time: time, status: "Active" });
     } else {
       alert("Enter any Todo");
     }

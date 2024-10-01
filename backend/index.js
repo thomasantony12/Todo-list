@@ -37,7 +37,7 @@ app.post("/newTask", async (req, res) => {
   try {
     const task = req.body["task"];
     const time = req.body["time"];
-    const status = "Active";
+    const status = req.body["status"];
     await db.query(
       "INSERT INTO todolist (task, date, status) VALUES ($1, $2, $3)",
       [task, time, status]
