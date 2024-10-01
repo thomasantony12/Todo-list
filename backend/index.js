@@ -25,37 +25,57 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.get("/", async (req, res) => {
-  const result = await db.query("SELECT * FROM todolist ORDER BY date");
-  res.send(result.rows);
+  try {
+    const result = await db.query("SELECT * FROM todolist ORDER BY date");
+    res.send(result.rows);
+  } catch (err) {
+    console.log("/", err);
+  }
 });
 
 app.post("/newTask", async (req, res) => {
+  try {
+    const task = req.body["task"];
+    const time = req.body["time"];
+    const status = "Active";
+    await db.query(
+      "INSERT INTO todolist (task, date, status) VALUES ($1, $2, $3)",
+      [task, time, status]
+    );
+  } catch (err) {
+    console.log("/newTask", err);
+  }
   // console.log(req.body);
-  const task = req.body["task"];
-  const time = req.body["time"];
-  const status = "Active";
-  await db.query(
-    "INSERT INTO todolist (task, date, status) VALUES ($1, $2, $3)",
-    [task, time, status]
-  );
 });
 
 app.delete("/deleteTask", async (req, res) => {
   // console.log(req.body);
-  const id = req.body["dId"];
-  await db.query("DELETE FROM todolist WHERE id = $1", [id]);
+  try {
+    const id = req.body["dId"];
+    await db.query("DELETE FROM todolist WHERE id = $1", [id]);
+  } catch (err) {
+    console.log("/deleteTask", err);
+  }
 });
 
 app.patch("/updateTask", async (req, res) => {
-  const id = req.body["dId"];
-  const task = req.body["task"];
-  await db.query("UPDATE todolist SET task=$1 WHERE id = $2", [task, id]);
+  try {
+    const id = req.body["dId"];
+    const task = req.body["task"];
+    await db.query("UPDATE todolist SET task=$1 WHERE id = $2", [task, id]);
+  } catch (err) {
+    console.log("/updateTask", err);
+  }
 });
 
 app.patch("/updateStatus", async (req, res) => {
-  const id = req.body["dId"];
-  const status = req.body["status"];
-  await db.query("UPDATE todolist SET status=$1 WHERE id = $2", [status, id]);
+  try {
+    const id = req.body["dId"];
+    const status = req.body["status"];
+    await db.query("UPDATE todolist SET status=$1 WHERE id = $2", [status, id]);
+  } catch (err) {
+    console.log("/updateStatus", err);
+  }
 });
 
 app.listen(port, () => {
