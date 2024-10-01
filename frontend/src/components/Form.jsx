@@ -8,11 +8,11 @@ function Form(props) {
         props.setTodo(e.target.value);
     }
     
-    function insertHandler(e){
+    function insertHandler(){
         props.inputTask(props.todo);
         props.setTodo("");
     }
-    function updateHandler(e){
+    function updateHandler(){
         props.updateTask(props.todo, props.id);
         props.setTodo("");
     }
