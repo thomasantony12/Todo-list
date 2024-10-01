@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function App() {
-  const origin = "http://localhost:3000/";
+  const origin = "https://todo-list-seven-xi-18.vercel.app/";
 
   // Input state
   const [todo, setTodo] = useState("");
